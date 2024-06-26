@@ -8,6 +8,12 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors,
   styleUrls: ['./signup-form.component.scss']
 })
 export class SignupFormComponent {
+
+  array: any[] = [
+    { id: 1, name: 'Option 1' },
+    { id: 1, name: 'Option 1' },
+  ]
+
   countries = ['USA', 'Canada', 'UK', 'Australia', 'India'];
   states: { [key: string]: string[] } = {
     USA: ['California', 'Florida', 'New York', 'Texas'],
@@ -33,7 +39,9 @@ export class SignupFormComponent {
     validators: this.passwordMatchValidator
   });
 
-
+  getControl(formControl:string){
+    return this.signupForm.get(formControl);
+  }
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
@@ -49,6 +57,11 @@ export class SignupFormComponent {
   }
 
   onSubmit() {
+    if( this.signupForm.valid) {
+
+    } else {
+
+    }
     console.log(this.signupForm.value);
     const formData = this.signupForm.value;
       alert(

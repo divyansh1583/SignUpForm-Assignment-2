@@ -5,7 +5,8 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { SignupFormComponent } from './signup-form/signup-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
-
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import {MAT_RADIO_DEFAULT_OPTIONS, MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -16,8 +17,16 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    NgxMaskDirective
-  ],
-  providers: [provideNgxMask()],
+    NgxMaskDirective,
+    MatSlideToggleModule,
+    MatRadioModule
+  ],  
+  providers: [
+    provideNgxMask(),
+    {
+      provide: MAT_RADIO_DEFAULT_OPTIONS,
+      useValue: { color: 'black' },
+    }
+  ]
 })
 export class AuthModule { }
