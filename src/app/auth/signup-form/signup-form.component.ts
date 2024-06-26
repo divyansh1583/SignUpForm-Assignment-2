@@ -50,5 +50,16 @@ export class SignupFormComponent {
 
   onSubmit() {
     console.log(this.signupForm.value);
+    const formData = this.signupForm.value;
+      alert(
+        `Form submitted successfully! Here are the form values:\n\n` +
+        `First Name: ${formData.firstName}\n` +
+        `Last Name: ${formData.lastName}\n` +
+        `Email: ${formData.email}\n` +
+        `Phone Number: ${formData.phoneNumber}\n` +
+        `Country: ${formData.country}\n` +
+        `State: ${formData.state}\n` +
+        `Gender: ${formData.gender}\n`
+      );
   }
 }

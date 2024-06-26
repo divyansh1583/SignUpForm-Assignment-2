@@ -23,7 +23,7 @@
     
             <div class="form-group">
                 <label for="phoneNumber">Phone Number:</label>
-                <input id="phoneNumber" formControlName="phoneNumber" class="form-control">
+                <input id="phoneNumber" formControlName="phoneNumber" class="form-control" mask="0000000000">
                 <div *ngIf="signupForm.get('phoneNumber')?.invalid && signupForm.get('phoneNumber')?.touched" class="text-danger">Phone Number is required and must be a number.</div>
             </div>
     
@@ -67,7 +67,7 @@
             <div class="form-group">
                 <label for="confirmPassword">Confirm Password:</label>
                 <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control">
-                <div *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched" class="text-danger">Passwords must match.</div>
+                <div *ngIf="signupForm.hasError('mismatch') && signupForm.get('confirmPassword')?.touched" class="text-danger">Passwords do not match.</div>
               </div>
     
             <button type="submit" [disabled]="signupForm.invalid" class="btn btn-primary btn-block">Sign Up</button>
