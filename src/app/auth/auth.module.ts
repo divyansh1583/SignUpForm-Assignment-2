@@ -6,11 +6,19 @@ import { SignupFormComponent } from './signup-form/signup-form.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import {MAT_RADIO_DEFAULT_OPTIONS, MatRadioModule} from '@angular/material/radio';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSelectModule } from '@angular/material/select';
+import { NoSpaceDirective } from '../directives/no-space.directive';
+import { LoginComponent } from './login/login.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @NgModule({
   declarations: [
-    SignupFormComponent
+    SignupFormComponent,
+    NoSpaceDirective,
+    LoginComponent
   ],
   imports: [
     CommonModule,
@@ -19,14 +27,13 @@ import {MAT_RADIO_DEFAULT_OPTIONS, MatRadioModule} from '@angular/material/radio
     FormsModule,
     NgxMaskDirective,
     MatSlideToggleModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSelectModule,
+    MatDialogModule,
+    MatButtonModule
   ],  
   providers: [
-    provideNgxMask(),
-    {
-      provide: MAT_RADIO_DEFAULT_OPTIONS,
-      useValue: { color: 'black' },
-    }
+    provideNgxMask()
   ]
 })
 export class AuthModule { }

@@ -1,0 +1,33 @@
+<form [formGroup]="loginForm" (ngSubmit)="saveForm()" class="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div class="card shadow p-4 mb-5 bg-white rounded" style="width: 400px;">
+      <div class="card-body">
+        <h1 class="card-title text-center mb-4">Login</h1>
+        <div class="form-group mb-3">
+          <label for="email">Email:</label>
+          <input type="email" id="email" formControlName="email" class="form-control" appNoSpace>
+          <div *ngIf="getControl('email')?.invalid && getControl('email')?.touched">
+            <span *ngIf="getControl('email')?.errors?.['required']" class="text-danger">Email is required.</span>
+            <span *ngIf="getControl('email')?.errors?.['email']" class="text-danger">Enter a valid email.</span>
+            <mat-error *ngIf="getControl('email')?.errors?.['noSpace']" class="text-danger">No spaces allowed.</mat-error>
+
+          </div>
+        </div>
+        <div class="form-group mb-3">
+          <label for="password">Password:</label>
+          <input type="password" id="password" formControlName="password" class="form-control" appNoSpace>
+          <div *ngIf="getControl('password')?.invalid && getControl('password')?.touched">
+              <span *ngIf="getControl('password')?.errors?.['required']" class="text-danger">Password is required.</span>
+            <span *ngIf="getControl('password')?.errors?.['minlength']" class="text-danger">Password must be at least 6 characters long.</span>
+            <mat-error *ngIf="getControl('password')?.errors?.['noSpace']" class="text-danger">No spaces allowed.</mat-error>
+
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <button [disabled]="loginForm.invalid" type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </form>
+  
+  
+  
