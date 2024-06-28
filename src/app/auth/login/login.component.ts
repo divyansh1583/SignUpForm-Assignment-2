@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   
-  constructor(private router:Router) { }
+  constructor(private router:Router,private toastr: ToastrService) { }
 
   loginForm = new FormGroup({
     email: new FormControl("", [Validators.required, Validators.email]),
@@ -27,10 +28,10 @@ export class LoginComponent {
     if(localEmail==email && localPassword==password && this.loginForm.valid){
       // alert('Login Successfull');
       localStorage.setItem('login_token', 'token');
-      this.router.navigate(['/user/dashboard']);
+      this.router.navigate(['/user/user-com']);
     }
     else{
-      alert('Invalid Credentials');
+      this.toastr.warning('Please write again', 'Invalid Credential!');
     }
     
   }

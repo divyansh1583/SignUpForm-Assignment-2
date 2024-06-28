@@ -4,7 +4,7 @@ import{countries} from '../../data/countries';
 import{states} from '../../data/states';
 import { Router } from '@angular/router';
 @Component({
-  selector: 'app-signup-material',
+  selector: 'app-signupMat-material',
   templateUrl: './signup-material.component.html',
   styleUrls: ['./signup-material.component.scss']
 })
@@ -14,16 +14,17 @@ export class SignupMaterialComponent {
   hide = true;
   hide1 = true;
   private fb = inject(FormBuilder);
-  signupFormMat = this.fb.group({
-    firstName: [null, Validators.required],
+  private router = inject(Router);
+  signupMat = this.fb.group({
+    firstName: [null, [Validators.required,Validators.maxLength(20)]],
     lastName: [null, Validators.required],
     email: [null, [Validators.required, Validators.email]],
-    phoneNumber: [null, [Validators.required, Validators.pattern('^[0-9]*$')]],
+    phoneNumber: [null, [Validators.required]],
     country: [null, Validators.required],
     state: [null, Validators.required],
     gender: [null, Validators.required],
-    password: [null, [Validators.required, Validators.minLength(6)]],
-    confirmPassword: [null, [Validators.required, Validators.minLength(6)]]
+    password: [null, [Validators.required, Validators.pattern(/^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d)(?=.*[$@$!%*?&]).{6,}$/)]],
+    confirmPassword: [null, Validators.required]
   },
     {
       validators: this.passwordMatchValidator
@@ -31,7 +32,7 @@ export class SignupMaterialComponent {
   );
   //func to get form values
   getControl(formControl: string) {
-    return this.signupFormMat.get(formControl);
+    return this.signupMat.get(formControl);
   }
 
   //passwordmatcher validator
@@ -43,13 +44,20 @@ export class SignupMaterialComponent {
 
   //func to get states list by country key
   getStates(){
-    const country = this.signupFormMat.get('country')?.value;
+    const country = this.signupMat.get('country')?.value;
     if (country) {
       return this.states[country];
     }
     return [];
   }
   onSubmit() {
-    throw new Error('Method not implemented.');
+    if( this.signupMat.valid) {
+      console.log(this.signupMat.value);
+      localStorage.setItem('email', this.signupMat.get('email')?.value!);
+      localStorage.setItem('password', this.signupMat.get('password')?.value!);
+      this.router.navigate(['/auth/login']);
+    } else {
+      alert('Please fill out all the required fields.');
+    }
   }
 }

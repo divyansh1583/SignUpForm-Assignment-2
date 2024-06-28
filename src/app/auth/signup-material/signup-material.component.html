@@ -1,4 +1,4 @@
-<form [formGroup]="signupFormMat" (ngSubmit)="onSubmit()">
+<form [formGroup]="signupMat" (ngSubmit)="onSubmit()">
     <mat-card class="container mt-3">
         <mat-card-header>
             <mat-card-title>SignUp Form</mat-card-title>
@@ -11,11 +11,13 @@
                 <mat-form-field class="col-6" appearance="fill">
                     <input matInput placeholder="FirstName" formControlName="firstName">
                     <mat-error *ngIf="getControl('firstName')?.errors?.['required']">FirstName is required</mat-error>
-                    <mat-error *ngIf="getControl('firstName')?.errors?.['minlength']">FirstName must be at least 3 characters</mat-error>
+                    <mat-error *ngIf="getControl('firstName')?.errors?.['maxlength']">FirstName must be at max 20 characters</mat-error>
                 </mat-form-field>
                 <!-- lastname -->
                 <mat-form-field class="col-6">
                     <input matInput placeholder="LastName" formControlName="lastName">
+                    <mat-error *ngIf="getControl('lastName')?.errors?.['required']">LastName is required</mat-error>
+                    <mat-error *ngIf="getControl('lastName')?.errors?.['maxlength']">LastName must be at max 20 characters</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
@@ -24,11 +26,13 @@
                     <mat-label>Enter your email</mat-label>
                     <input matInput placeholder="pat@example.com" formControlName="email" required>
                     <mat-error *ngIf="getControl('email')?.errors?.['required']">Email is required</mat-error>
+                    <mat-error *ngIf="getControl('email')?.errors?.['email']">Email is invalid</mat-error>
                 </mat-form-field>
                 <!-- phone-->
                 <mat-form-field class="col-6">
                     <input matInput placeholder="Phone" formControlName="phoneNumber" mask="000-000-0000" [showMaskTyped]="true">
                     <mat-icon matSuffix>phone</mat-icon>
+                    <mat-error *ngIf="getControl('phoneNumber')?.errors?.['required']">Phone No is required</mat-error>
                 </mat-form-field>
             </div>
             <div class="row">
@@ -49,12 +53,13 @@
                     <mat-error *ngIf="getControl('state')?.hasError('required')">Please choose a State</mat-error>
                 </mat-form-field>
             </div>
-            <div class="row">
+            <div class="row my-3">
                 <!-- gender  -->
                 <mat-label>Gender</mat-label>
                 <mat-radio-group formControlName="gender">
                     <mat-radio-button value="male">Male</mat-radio-button>
                     <mat-radio-button value="female">Female</mat-radio-button>
+                    <mat-error *ngIf="getControl('gender')?.errors?.['required'] && getControl('password')?.touched">Gender is required</mat-error>
                 </mat-radio-group>
             </div>
             <div class="row">
@@ -66,7 +71,12 @@
                     <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                         [attr.aria-pressed]="hide">
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        
                     </button>
+                    <mat-error *ngIf="getControl('password')?.errors?.['required']">Password is required</mat-error>
+                    <mat-error *ngIf="getControl('password')?.errors?.['pattern']">
+                        Password must contain at least 6 characters, one uppercase letter, one lowercase letter, and one number
+                      </mat-error>
                 </mat-form-field>
                 <!-- confirm password  -->
                 <mat-form-field class="col-6">
@@ -77,11 +87,12 @@
                         [attr.aria-pressed]="hide1">
                         <mat-icon>{{hide1 ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
+                    <mat-error *ngIf="signupMat.hasError('mismatch')">Passwords do not match</mat-error>
                 </mat-form-field>
             </div>
         </mat-card-content>
         <mat-card-actions align="end">
-            <button mat-raised-button color="primary" type="submit">Submit</button>
+            <button mat-raised-button color="primary" type="submit" [disabled]="signupMat.invalid">Submit</button>
         </mat-card-actions>
     </mat-card>
 </form>
